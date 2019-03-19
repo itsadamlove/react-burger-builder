@@ -1,5 +1,6 @@
 import React from 'react';
 import Aux from '../../hoc/Aux'
+import styles from './Layout.module.scss'
 
 const layout = ({children}) => (
   <Aux>
@@ -8,7 +9,7 @@ const layout = ({children}) => (
       SideDrawer
       Backdrop
     </div>
-    <main>
+    <main className={styles.Layout__content}>
       {children}
     </main>
   </Aux>
