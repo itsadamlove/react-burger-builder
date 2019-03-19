@@ -3,10 +3,6 @@ import styles from './BurgerIngredient.module.scss';
 import PropTypes from 'prop-types';
 
 class BurgerIngredient extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { type } = this.props;
     let ingredient = null;
