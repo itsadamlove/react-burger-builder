@@ -4,11 +4,20 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import PropTypes from 'prop-types';
 
 const burger = ({ ingredients }) => {
-  const transformedIngredients = Object.keys(ingredients).map(igKey => {
-    return [...Array(ingredients[igKey])].map((_, i) => {
-      return <BurgerIngredient key={igKey + i} type={igKey} />;
-    });
-  });
+  let transformedIngredients = Object.keys(ingredients)
+    .map(igKey => {
+      return [...Array(ingredients[igKey])].map((_, i) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />;
+      });
+    })
+    .reduce((arr, el) => {
+      return arr.concat(el);
+    }, []);
+
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please start adding ingredients</p>;
+  }
+
   return (
     <div className={styles.Burger}>
       <BurgerIngredient type="bread-top" />
