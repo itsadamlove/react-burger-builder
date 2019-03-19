@@ -1,4 +1,6 @@
 @import 'stylesheets/colours.scss';
+@import 'stylesheets/fonts.scss';
+
 
 body {
   margin: 0;
@@ -8,6 +10,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.testFont {
+  font-family: $montserrat;
 }
 
 code {
