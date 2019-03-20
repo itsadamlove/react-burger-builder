@@ -37,7 +37,6 @@ class Layout extends Component {
             open={showSideDrawer}
             closed={this.sideDrawerClosedHandler}
           />
-          Toolbar SideDrawer Backdrop
         </div>
         <main className={styles.Layout__content}>{children}</main>
       </Aux>
