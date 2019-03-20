@@ -1,8 +1,13 @@
 import React from 'react';
 import Aux from '../../../hoc/Aux';
 import PropTypes from 'prop-types';
+import Button from '../../UI/Button/Button';
 
-const orderSummary = ({ ingredients }) => {
+const orderSummary = ({
+  ingredients,
+  purchaseCancelled,
+  purchaseContinued
+}) => {
   const ingredientSummary2 = Object.keys(ingredients)
     .filter(igKey => {
       return ingredients[igKey] > 0;
@@ -22,12 +27,20 @@ const orderSummary = ({ ingredients }) => {
       <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredientSummary2}</ul>
       <p>Continue to Checkout?</p>
+      <Button clicked={purchaseCancelled} btnType="Danger">
+        CANCEL
+      </Button>
+      <Button clicked={purchaseContinued} btnType="Success">
+        CONTINUE
+      </Button>
     </Aux>
   );
 };
 
 orderSummary.propTypes = {
-  ingredients: PropTypes.object.isRequired
+  ingredients: PropTypes.object.isRequired,
+  purchaseCancelled: PropTypes.func.isRequired,
+  purchaseContinued: PropTypes.func.isRequired
 };
 
 export default orderSummary;
