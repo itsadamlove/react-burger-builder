@@ -6,7 +6,8 @@ import Button from '../../UI/Button/Button';
 const orderSummary = ({
   ingredients,
   purchaseCancelled,
-  purchaseContinued
+  purchaseContinued,
+  price
 }) => {
   const ingredientSummary2 = Object.keys(ingredients)
     .filter(igKey => {
@@ -26,6 +27,9 @@ const orderSummary = ({
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredientSummary2}</ul>
+      <p>
+        <strong>Total Price: ${price.toFixed(2)}</strong>
+      </p>
       <p>Continue to Checkout?</p>
       <Button clicked={purchaseCancelled} btnType="Danger">
         CANCEL
@@ -40,7 +44,8 @@ const orderSummary = ({
 orderSummary.propTypes = {
   ingredients: PropTypes.object.isRequired,
   purchaseCancelled: PropTypes.func.isRequired,
-  purchaseContinued: PropTypes.func.isRequired
+  purchaseContinued: PropTypes.func.isRequired,
+  price: PropTypes.number
 };
 
 export default orderSummary;
