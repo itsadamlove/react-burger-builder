@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Burger.module.scss';
-import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import PropTypes from 'prop-types';
+import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+import styles from './Burger.module.scss';
 
 const burger = ({ ingredients }) => {
   let transformedIngredients = Object.keys(ingredients)
@@ -28,7 +28,7 @@ const burger = ({ ingredients }) => {
 };
 
 burger.propTypes = {
-  ingredients: PropTypes.object
+  ingredients: PropTypes.object,
 };
 
 export default burger;
