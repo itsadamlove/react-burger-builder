@@ -12,7 +12,7 @@ const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
-  bacon: 0.7
+  bacon: 0.7,
 };
 
 class BurgerBuilder extends Component {
@@ -24,7 +24,7 @@ class BurgerBuilder extends Component {
       purchaseable: false,
       purchasing: false,
       loading: false,
-      error: false
+      error: false,
     };
   }
 
@@ -54,14 +54,14 @@ class BurgerBuilder extends Component {
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
     const updatedIngredients = {
-      ...this.state.ingredients
+      ...this.state.ingredients,
     };
     updatedIngredients[type] = updatedCount;
     const newPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
 
     this.setState({
       ingredients: updatedIngredients,
-      totalPrice: newPrice
+      totalPrice: newPrice,
     });
     this.updatePurchaseState(updatedIngredients);
   };
@@ -73,14 +73,14 @@ class BurgerBuilder extends Component {
     }
     const updatedCount = oldCount - 1;
     const updatedIngredients = {
-      ...this.state.ingredients
+      ...this.state.ingredients,
     };
     updatedIngredients[type] = updatedCount;
     const newPrice = this.state.totalPrice - INGREDIENT_PRICES[type];
 
     this.setState({
       ingredients: updatedIngredients,
-      totalPrice: newPrice
+      totalPrice: newPrice,
     });
     this.updatePurchaseState(updatedIngredients);
   };
@@ -94,34 +94,38 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Adam Love',
-        email: 'test@test.com',
-        address: {
-          street: '123 Main Street',
-          zipCode: '1234',
-          country: 'Australia'
-        },
-        deliveryMethod: 'fastest'
-      }
-    };
-
-    // NOTE: firebase needs .json
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(response);
-      })
-      .catch(err => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(err);
-      });
+    this.props.history.push('/checkout');
   };
+
+  //purchaseContinueHandler = () => {
+  //this.setState({ loading: true });
+  //const order = {
+  //ingredients: this.state.ingredients,
+  //price: this.state.totalPrice,
+  //customer: {
+  //name: 'Adam Love',
+  //email: 'test@test.com',
+  //address: {
+  //street: '123 Main Street',
+  //zipCode: '1234',
+  //country: 'Australia'
+  //},
+  //deliveryMethod: 'fastest'
+  //}
+  //};
+
+  //// NOTE: firebase needs .json
+  //axios
+  //.post('/orders.json', order)
+  //.then(response => {
+  //this.setState({ loading: false, purchasing: false });
+  //console.log(response);
+  //})
+  //.catch(err => {
+  //this.setState({ loading: false, purchasing: false });
+  //console.log(err);
+  //});
+  //};
 
   render() {
     const {
@@ -129,10 +133,10 @@ class BurgerBuilder extends Component {
       totalPrice,
       purchaseable,
       purchasing,
-      loading
+      loading,
     } = this.state;
     const disabledInfo = {
-      ...ingredients
+      ...ingredients,
     };
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
