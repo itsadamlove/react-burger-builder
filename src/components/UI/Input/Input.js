@@ -2,31 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Input.module.scss';
 
-const input = props => {
+const input = (label, elementType, elementConfig, value) => {
   let inputElement = null;
 
-  switch (props.inputtype) {
+  switch (elementType) {
     case 'input':
-      inputElement = <input className={styles.InputElement} {...props} />;
+      inputElement = (
+        <input
+          className={styles.InputElement}
+          {...elementConfig}
+          value={value}
+        />
+      );
       break;
     case 'textarea':
-      inputElement = <textarea className={styles.InputElement} {...props} />;
+      inputElement = (
+        <textarea
+          className={styles.InputElement}
+          {...elementConfig}
+          value={value}
+        />
+      );
       break;
     default:
-      inputElement = <input className={styles.InputElement} {...props} />;
+      inputElement = (
+        <input
+          className={styles.InputElement}
+          {...elementConfig}
+          value={value}
+        />
+      );
   }
 
   return (
     <div className={styles.Input}>
-      <label className={styles.Label}>{props.label}</label>
+      <label className={styles.Label}>{label}</label>
       {inputElement}
     </div>
   );
 };
 
 input.propTypes = {
-  inputType: PropTypes.string,
-  label: PropTypes.string,
+  elementType: PropTypes.string,
+  elementConfig: PropTypes.object,
 };
 
 export default input;
