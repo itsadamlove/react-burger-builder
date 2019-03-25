@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Input.module.scss';
 
-const input = (label, elementType, elementConfig, value) => {
+const input = ({ label, elementType, elementConfig, value }) => {
   let inputElement = null;
 
   switch (elementType) {
@@ -22,6 +22,17 @@ const input = (label, elementType, elementConfig, value) => {
           {...elementConfig}
           value={value}
         />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select className={styles.InputElement} value={value}>
+          {elementConfig.options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.displayValue}
+            </option>
+          ))}
+        </select>
       );
       break;
     default:
@@ -44,7 +55,6 @@ const input = (label, elementType, elementConfig, value) => {
 
 input.propTypes = {
   elementType: PropTypes.string,
-  elementConfig: PropTypes.object,
 };
 
 export default input;
