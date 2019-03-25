@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Aux from '../Aux/Aux';
 import styles from './Layout.module.scss';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
-import PropTypes from 'prop-types';
 
 class Layout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSideDrawer: false
+      showSideDrawer: false,
     };
   }
 
   sideDrawerClosedHandler = () => {
     this.setState({
-      showSideDrawer: false
+      showSideDrawer: false,
     });
   };
 
@@ -45,7 +45,7 @@ class Layout extends Component {
 }
 
 Layout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default Layout;
