@@ -65,19 +65,16 @@ class ContactData extends Component {
   orderHandler = e => {
     e.preventDefault();
     this.setState({ loading: true });
+    const formData = {};
+    Object.keys(this.state.orderForm).forEach(formElementIdentifier => {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
+    });
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: 'Adam Love',
-        email: 'test@test.com',
-        address: {
-          street: '123 Main Street',
-          zipCode: '1234',
-          country: 'Australia',
-        },
-        deliveryMethod: 'fastest',
-      },
+      orderData: formData,
     };
 
     // NOTE: firebase needs .json
@@ -114,7 +111,7 @@ class ContactData extends Component {
     }));
 
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formElementsArray.map(formElement => (
           <Input
             key={formElement.id}
@@ -124,9 +121,7 @@ class ContactData extends Component {
             changed={event => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
-        <Button btnType="Success" clicked={this.orderHandler}>
-          ORDER
-        </Button>
+        <Button btnType="Success">ORDER</Button>
       </form>
     );
     if (this.state.loading) {
