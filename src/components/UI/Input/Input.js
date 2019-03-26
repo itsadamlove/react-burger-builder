@@ -3,19 +3,23 @@ import PropTypes from 'prop-types';
 import styles from './Input.module.scss';
 
 const input = ({
-  label,
   elementType,
   elementConfig,
   value,
   changed,
   invalid,
+  touched,
   shouldValidate,
+  errorMessage,
+  label,
 }) => {
   let inputElement = null;
   const inputClasses = [styles.InputElement];
 
-  if (shouldValidate && invalid) {
+  let validationError = null;
+  if (touched && shouldValidate && invalid) {
     inputClasses.push(styles.Invalid);
+    validationError = <p className={styles.ValidationError}>{errorMessage}</p>;
   }
 
   switch (elementType) {
@@ -69,12 +73,20 @@ const input = ({
     <div className={styles.Input}>
       <label className={styles.Label}>{label}</label>
       {inputElement}
+      {validationError}
     </div>
   );
 };
 
 input.propTypes = {
-  elementType: PropTypes.string,
+  elementType: PropTypes.string.isRequired,
+  elementConfig: PropTypes.object.isRequired,
+  value: PropTypes.any.isRequired,
+  changed: PropTypes.func.isRequired,
+  invalid: PropTypes.bool,
+  shouldValidate: PropTypes.object,
+  touched: PropTypes.bool,
+  label: PropTypes.string,
 };
 
 export default input;
