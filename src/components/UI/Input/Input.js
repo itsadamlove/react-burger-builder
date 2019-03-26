@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Input.module.scss';
 
-const input = ({ label, elementType, elementConfig, value }) => {
+const input = ({ label, elementType, elementConfig, value, changed }) => {
   let inputElement = null;
 
   switch (elementType) {
@@ -12,6 +12,7 @@ const input = ({ label, elementType, elementConfig, value }) => {
           className={styles.InputElement}
           {...elementConfig}
           value={value}
+          onChange={changed}
         />
       );
       break;
@@ -21,12 +22,17 @@ const input = ({ label, elementType, elementConfig, value }) => {
           className={styles.InputElement}
           {...elementConfig}
           value={value}
+          onChange={changed}
         />
       );
       break;
     case 'select':
       inputElement = (
-        <select className={styles.InputElement} value={value}>
+        <select
+          className={styles.InputElement}
+          value={value}
+          onChange={changed}
+        >
           {elementConfig.options.map(option => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
@@ -39,6 +45,7 @@ const input = ({ label, elementType, elementConfig, value }) => {
       inputElement = (
         <input
           className={styles.InputElement}
+          onChange={changed}
           {...elementConfig}
           value={value}
         />
