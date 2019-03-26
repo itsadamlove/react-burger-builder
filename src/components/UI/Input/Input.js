@@ -83,10 +83,11 @@ input.propTypes = {
   elementConfig: PropTypes.object.isRequired,
   value: PropTypes.any.isRequired,
   changed: PropTypes.func.isRequired,
-  invalid: PropTypes.bool,
-  shouldValidate: PropTypes.object,
+  invalid: PropTypes.bool.isRequired,
+  shouldValidate: PropTypes.object.isRequired,
   touched: PropTypes.bool,
   label: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
 
 export default input;
