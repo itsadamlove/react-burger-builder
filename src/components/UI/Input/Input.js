@@ -2,14 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Input.module.scss';
 
-const input = ({ label, elementType, elementConfig, value, changed }) => {
+const input = ({
+  label,
+  elementType,
+  elementConfig,
+  value,
+  changed,
+  invalid,
+  shouldValidate,
+}) => {
   let inputElement = null;
+  const inputClasses = [styles.InputElement];
+
+  if (shouldValidate && invalid) {
+    inputClasses.push(styles.Invalid);
+  }
 
   switch (elementType) {
     case 'input':
       inputElement = (
         <input
-          className={styles.InputElement}
+          className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
           onChange={changed}
@@ -19,7 +32,7 @@ const input = ({ label, elementType, elementConfig, value, changed }) => {
     case 'textarea':
       inputElement = (
         <textarea
-          className={styles.InputElement}
+          className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
           onChange={changed}
@@ -29,7 +42,7 @@ const input = ({ label, elementType, elementConfig, value, changed }) => {
     case 'select':
       inputElement = (
         <select
-          className={styles.InputElement}
+          className={inputClasses.join(' ')}
           value={value}
           onChange={changed}
         >
