@@ -1,47 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Order from '../../components/Order/Order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
+import * as actions from '../../store/actions/index';
 
 class Orders extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      orders: null,
-      error: false,
-    };
+  componentDidMount() {
+    this.props.onFetchOrders();
   }
 
-  componentDidMount() {
-    axios
-      .get('/orders.json')
-      .then(resp => {
-        const fetchedOrders = [];
-        Object.keys(resp.data).forEach(key => {
-          fetchedOrders.push({
-            ...resp.data[key],
-            id: key,
-          });
-        });
-        this.setState({
-          loading: false,
-          orders: fetchedOrders,
-        });
-      })
-      .catch(err => {
-        this.setState({
-          loading: false,
-          error: true,
-        });
-        console.log(err);
-      });
-  }
   render() {
-    let orders = <Spinner />;
-    if (this.state.orders) {
-      orders = this.state.orders.map(order => (
+    const { loading, orders } = this.props;
+    let orderElems = <Spinner />;
+
+    if (!loading) {
+      orderElems = orders.map(order => (
         <Order
           key={order.id}
           price={+order.price}
@@ -49,8 +26,30 @@ class Orders extends Component {
         />
       ));
     }
-    return <div>{orders}</div>;
+    return <div>{orderElems}</div>;
   }
 }
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = state => {
+  return {
+    loading: state.order.loading,
+    orders: state.order.orders,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchOrders: () => dispatch(actions.fetchOrders()),
+  };
+};
+
+Orders.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  orders: PropTypes.array.isRequired,
+  onFetchOrders: PropTypes.func.isRequired,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withErrorHandler(Orders, axios));
