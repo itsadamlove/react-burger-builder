@@ -3,15 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
-import * as actions from '../../store/actions/index';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
-  componentWillMount() {
-    this.props.onInitPurchase();
-  }
-
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
   };
@@ -34,7 +29,7 @@ class Checkout extends Component {
             checkoutContinued={this.checkoutContinuedHandler}
           />
           <Route
-            path={this.props.match.path + '/contact-data'}
+            path={`${this.props.match.path}/contact-data`}
             component={ContactData}
           />
         </div>
@@ -52,19 +47,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onInitPurchase: () => dispatch(actions.purchaseInit()),
-  };
-};
-
 Checkout.propTypes = {
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   ingredients: PropTypes.object.isRequired,
   purchased: PropTypes.bool.isRequired,
-  onInitPurchase: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Checkout);
+export default connect(mapStateToProps)(Checkout);
