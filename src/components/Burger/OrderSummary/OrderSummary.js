@@ -16,10 +16,10 @@ class OrderSummary extends Component {
       ingredients,
       purchaseCancelled,
       purchaseContinued,
-      price
+      price,
     } = this.props;
 
-    const ingredientSummary2 = Object.keys(ingredients)
+    const ingredientSummary = Object.keys(ingredients)
       .filter(igKey => {
         return ingredients[igKey] > 0;
       })
@@ -36,7 +36,7 @@ class OrderSummary extends Component {
       <Aux>
         <h3>Your Order</h3>
         <p>A delicious burger with the following ingredients:</p>
-        <ul>{ingredientSummary2}</ul>
+        <ul>{ingredientSummary}</ul>
         <p>
           <strong>Total Price: ${price.toFixed(2)}</strong>
         </p>
@@ -56,7 +56,7 @@ OrderSummary.propTypes = {
   ingredients: PropTypes.object.isRequired,
   purchaseCancelled: PropTypes.func.isRequired,
   purchaseContinued: PropTypes.func.isRequired,
-  price: PropTypes.number
+  price: PropTypes.number,
 };
 
 export default OrderSummary;
