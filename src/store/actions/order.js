@@ -1,12 +1,12 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
-export const purchaseBurgerSuccess = (id, orderData) => {
+export const purchaseBurgerSuccess = (id, order) => {
   return {
     type: actionTypes.PURCHASE_BURGER_SUCCESS,
     payload: {
       id,
-      orderData,
+      order,
     },
   };
 };
@@ -26,14 +26,14 @@ export const purchaseBurgerStart = () => {
   };
 };
 
-export const purchaseBurger = (id, orderData) => {
+export const purchaseBurger = order => {
+  console.log(`[ORDERING]: ${JSON.stringify(order)} `);
   return dispatch => {
     dispatch(purchaseBurgerStart());
     axios
-      .post('/orders.json', orderData)
+      .post('/orders.json', order)
       .then(response => {
-        console.log(response.data);
-        dispatch(purchaseBurgerSuccess(response.data, orderData));
+        dispatch(purchaseBurgerSuccess(response.data.name, order));
       })
       .catch(err => {
         dispatch(purchaseBurgerFail(err));
